@@ -9,6 +9,14 @@
     "item.morecopperblock.waxed_weathered_copper_ingot": "Later cupreus attritus ceratus",
     "item.morecopperblock.waxed_oxidized_copper_ingot": "Later cupreus robiginosus ceratus",
 
+    "item.morecopperblock.exposed_copper_nugget": "Granum cupri obvium",
+    "item.morecopperblock.weathered_copper_nugget": "Granum cupri attritum",
+    "item.morecopperblock.oxidized_copper_nugget": "Granum cupri robiginosum",
+    "item.morecopperblock.waxed_copper_nugget": "Granum cupri ceratum",
+    "item.morecopperblock.waxed_exposed_copper_nugget": "Granum cupri obvium ceratum",
+    "item.morecopperblock.waxed_weathered_copper_nugget": "Granum cupri attritum ceratum",
+    "item.morecopperblock.waxed_oxidized_copper_nugget": "Granum cupri robiginosum ceratum",
+
     "block.morecopperblock.alloy_copper_block": "Cubus cupri mixti",
     "block.morecopperblock.exposed_alloy_copper_block": "Cubus cupri mixti obvius",
     "block.morecopperblock.weathered_alloy_copper_block": "Cubus cupri mixti attritus",
@@ -51,6 +59,8 @@
     "alloy.morecopperblock.cut_stairs_suffix": " Scalae cupreae scalptae",
     "alloy.morecopperblock.cut_slab_suffix": " Gradus cuprei scalptus",
     "alloy.morecopperblock.chiseled_suffix": " Cubus cupreus caelatus",
+    "alloy.morecopperblock.ingot_suffix": " Later cupreus",
+    "alloy.morecopperblock.nugget_suffix": " Globulus cupreus",
     
     "morecopperblock.configuration.title": "Configurationes Plurium Cuborum Cupreorum",
     "morecopperblock.configuration.section.morecopperblock.common.toml": "Configurationes Plurium Cuborum Cupreorum",

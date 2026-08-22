@@ -77,6 +77,16 @@ public class CutAlloyStonecutterRecipe implements Recipe<SingleRecipeInput> {
                 result.set(AlloyCopperBlockItem.SLAB_COMPOSITION.get(), slabComp);
             }
         }
+
+        // 嵌套单元（命名继承）：36 复制为 216（楼梯）/ 108（台阶）
+        List<String> nested = AlloyCopperBlockItem.getNestedUnits(in, 36);
+        if (nested != null) {
+            List<String> outNested = new ArrayList<>();
+            for (int i = 0; i < (isStairs ? 6 : 3); i++) {
+                outNested.addAll(nested);
+            }
+            result.set(AlloyCopperBlockItem.INGOT_COMPOSITION.get(), outNested);
+        }
         return result;
     }
 

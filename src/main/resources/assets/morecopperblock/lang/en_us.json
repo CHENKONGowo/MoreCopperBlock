@@ -9,6 +9,14 @@
   "item.morecopperblock.waxed_weathered_copper_ingot": "Waxed Weathered Copper Ingot",
   "item.morecopperblock.waxed_oxidized_copper_ingot": "Waxed Oxidized Copper Ingot",
 
+  "item.morecopperblock.exposed_copper_nugget": "Exposed Copper Nugget",
+  "item.morecopperblock.weathered_copper_nugget": "Weathered Copper Nugget",
+  "item.morecopperblock.oxidized_copper_nugget": "Oxidized Copper Nugget",
+  "item.morecopperblock.waxed_copper_nugget": "Waxed Copper Nugget",
+  "item.morecopperblock.waxed_exposed_copper_nugget": "Waxed Exposed Copper Nugget",
+  "item.morecopperblock.waxed_weathered_copper_nugget": "Waxed Weathered Copper Nugget",
+  "item.morecopperblock.waxed_oxidized_copper_nugget": "Waxed Oxidized Copper Nugget",
+
   "block.morecopperblock.alloy_copper_block": "Alloy Copper Block",
   "block.morecopperblock.exposed_alloy_copper_block": "Exposed Alloy Copper Block",
   "block.morecopperblock.weathered_alloy_copper_block": "Weathered Alloy Copper Block",
@@ -57,6 +65,8 @@
   "alloy.morecopperblock.cut_stairs_suffix": " Cut Copper Stairs",
   "alloy.morecopperblock.cut_slab_suffix": " Cut Copper Slab",
   "alloy.morecopperblock.chiseled_suffix": " Chiseled Copper Block",
+  "alloy.morecopperblock.ingot_suffix": " Copper Ingot",
+  "alloy.morecopperblock.nugget_suffix": " Copper Nugget",
 
   "morecopperblock.configuration.title": "MoreCopperBlock Configs",
   "morecopperblock.configuration.section.morecopperblock.common.toml": "MoreCopperBlock Configs",

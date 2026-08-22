@@ -73,6 +73,8 @@ public class CutAlloyStairsRecipe extends CustomRecipe {
     @Override
     public ItemStack assemble(CraftingInput input) {
         List<Integer> stairsComposition = new ArrayList<>(216);
+        List<String> nestedUnits = new ArrayList<>(216);
+        boolean hasNested = false;
         int[][] stairPositions = {{0, 0}, {0, 1}, {1, 1}, {0, 2}, {1, 2}, {2, 2}};
         double sum = 0;
 
@@ -96,6 +98,11 @@ public class CutAlloyStairsRecipe extends CustomRecipe {
                     sum += type % 4;
                 }
             }
+
+            // 嵌套单元（命名继承）
+            List<String> units = getCutBlockNestedUnits(stack);
+            nestedUnits.addAll(units);
+            if (hasAnyNested(units)) hasNested = true;
         }
 
         double avg = sum / 216.0;
@@ -103,7 +110,40 @@ public class CutAlloyStairsRecipe extends CustomRecipe {
 
         ItemStack result = new ItemStack(outBlock, 4);
         result.set(AlloyCopperBlockItem.STAIRS_COMPOSITION.get(), stairsComposition);
+        if (hasNested) {
+            result.set(AlloyCopperBlockItem.INGOT_COMPOSITION.get(), nestedUnits);
+        }
         return result;
+    }
+
+    /**
+     * Gets the 36 nested unit strings of an input cut copper block.
+     * Prefers stored nested units, then the simple composition, then block type.
+     */
+    private static List<String> getCutBlockNestedUnits(ItemStack stack) {
+        List<String> nested = stack.get(AlloyCopperBlockItem.INGOT_COMPOSITION.get());
+        if (nested != null && nested.size() == 36) return nested;
+
+        List<Integer> cutComp = stack.get(AlloyCopperBlockItem.CUT_COMPOSITION.get());
+        if (cutComp != null && cutComp.size() == 36) {
+            List<String> result = new ArrayList<>(36);
+            for (int v : cutComp) result.add(String.valueOf(v));
+            return result;
+        }
+
+        // Vanilla cut copper block
+        int type = getVanillaCutBlockType(((BlockItem) stack.getItem()).getBlock());
+        List<String> result = new ArrayList<>(36);
+        for (int i = 0; i < 36; i++) result.add(String.valueOf(type));
+        return result;
+    }
+
+    /** True if any unit is a nested bracket notation (named ingot). */
+    private static boolean hasAnyNested(List<String> units) {
+        for (String s : units) {
+            if (s.startsWith("[")) return true;
+        }
+        return false;
     }
 
     @Override

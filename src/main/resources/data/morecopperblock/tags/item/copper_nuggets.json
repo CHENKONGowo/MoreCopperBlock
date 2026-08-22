@@ -1,0 +1,12 @@
+{
+  "values": [
+    "minecraft:copper_nugget",
+    "morecopperblock:exposed_copper_nugget",
+    "morecopperblock:weathered_copper_nugget",
+    "morecopperblock:oxidized_copper_nugget",
+    "morecopperblock:waxed_copper_nugget",
+    "morecopperblock:waxed_exposed_copper_nugget",
+    "morecopperblock:waxed_weathered_copper_nugget",
+    "morecopperblock:waxed_oxidized_copper_nugget"
+  ]
+}

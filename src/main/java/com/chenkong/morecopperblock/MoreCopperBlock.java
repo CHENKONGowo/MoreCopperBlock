@@ -291,6 +291,13 @@ public class MoreCopperBlock {
                         output.accept(ModItems.WAXED_EXPOSED_COPPER_INGOT.get());
                         output.accept(ModItems.WAXED_WEATHERED_COPPER_INGOT.get());
                         output.accept(ModItems.WAXED_OXIDIZED_COPPER_INGOT.get());
+                        output.accept(ModItems.EXPOSED_COPPER_NUGGET.get());
+                        output.accept(ModItems.WEATHERED_COPPER_NUGGET.get());
+                        output.accept(ModItems.OXIDIZED_COPPER_NUGGET.get());
+                        output.accept(ModItems.WAXED_COPPER_NUGGET.get());
+                        output.accept(ModItems.WAXED_EXPOSED_COPPER_NUGGET.get());
+                        output.accept(ModItems.WAXED_WEATHERED_COPPER_NUGGET.get());
+                        output.accept(ModItems.WAXED_OXIDIZED_COPPER_NUGGET.get());
                         output.accept(ALLOY_COPPER_BLOCK_ITEM.get());
                         output.accept(EXPOSED_ALLOY_COPPER_BLOCK_ITEM.get());
                         output.accept(WEATHERED_ALLOY_COPPER_BLOCK_ITEM.get());

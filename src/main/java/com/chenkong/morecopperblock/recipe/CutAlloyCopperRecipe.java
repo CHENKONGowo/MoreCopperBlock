@@ -54,15 +54,22 @@ public class CutAlloyCopperRecipe extends CustomRecipe {
     @Override
     public ItemStack assemble(CraftingInput input) {
         List<Integer> cutComposition = new ArrayList<>(36);
+        List<String> nestedUnits = new ArrayList<>(36);
+        boolean hasNested = false;
         double sum = 0;
 
         for (int row = 0; row < 2; row++) {
             for (int col = 0; col < 2; col++) {
-                List<Integer> comp = getBlockComposition(input.getItem(col, row));
+                ItemStack stack = input.getItem(col, row);
+                List<Integer> comp = getBlockComposition(stack);
                 for (int v : comp) {
                     cutComposition.add(v);
                     sum += v % 4;
                 }
+                // 嵌套单元（来自命名铜锭的命名继承）
+                List<String> units = getBlockNestedUnits(stack);
+                nestedUnits.addAll(units);
+                if (hasAnyNested(units)) hasNested = true;
             }
         }
 
@@ -76,6 +83,9 @@ public class CutAlloyCopperRecipe extends CustomRecipe {
 
         ItemStack result = new ItemStack(output, 4);
         result.set(AlloyCopperBlockItem.CUT_COMPOSITION.get(), cutComposition);
+        if (hasNested) {
+            result.set(AlloyCopperBlockItem.INGOT_COMPOSITION.get(), nestedUnits);
+        }
         return result;
     }
 
@@ -133,5 +143,45 @@ public class CutAlloyCopperRecipe extends CustomRecipe {
         List<Integer> defaultComp = new ArrayList<>(9);
         for (int i = 0; i < 9; i++) defaultComp.add(type);
         return defaultComp;
+    }
+
+    /**
+     * Gets the 9 nested unit strings of an input copper block.
+     * Prefers the stored nested composition (from named ingots), then the
+     * simple composition, and finally falls back to the block type.
+     */
+    private static List<String> getBlockNestedUnits(ItemStack stack) {
+        // Alloy copper block with nested naming
+        List<String> nested = stack.get(AlloyCopperBlockItem.INGOT_COMPOSITION.get());
+        if (nested != null && nested.size() == 9) return nested;
+
+        // Alloy copper block with simple composition
+        List<Integer> comp = stack.get(AlloyCopperBlockItem.COMPOSITION.get());
+        if (comp != null && comp.size() == 9) {
+            List<String> result = new ArrayList<>(9);
+            for (int v : comp) result.add(String.valueOf(v));
+            return result;
+        }
+
+        // Vanilla copper block — derive from block type
+        Block block = ((BlockItem) stack.getItem()).getBlock();
+        WeatheringCopperCollection<Block> c = Blocks.COPPER_BLOCK;
+        int type;
+        if (block == c.weathering().unaffected() || block == c.waxed().unaffected())      type = 0;
+        else if (block == c.weathering().exposed() || block == c.waxed().exposed())        type = 1;
+        else if (block == c.weathering().weathered() || block == c.waxed().weathered())    type = 2;
+        else                                                                                type = 3;
+
+        List<String> result = new ArrayList<>(9);
+        for (int i = 0; i < 9; i++) result.add(String.valueOf(type));
+        return result;
+    }
+
+    /** True if any unit is a nested bracket notation (named ingot). */
+    private static boolean hasAnyNested(List<String> units) {
+        for (String s : units) {
+            if (s.startsWith("[")) return true;
+        }
+        return false;
     }
 }
