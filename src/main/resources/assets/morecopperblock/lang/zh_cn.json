@@ -9,6 +9,14 @@
   "item.morecopperblock.waxed_weathered_copper_ingot": "涂蜡的锈蚀铜锭",
   "item.morecopperblock.waxed_oxidized_copper_ingot": "涂蜡的氧化铜锭",
 
+  "item.morecopperblock.exposed_copper_nugget": "斑驳的铜粒",
+  "item.morecopperblock.weathered_copper_nugget": "锈蚀的铜粒",
+  "item.morecopperblock.oxidized_copper_nugget": "氧化的铜粒",
+  "item.morecopperblock.waxed_copper_nugget": "涂蜡的铜粒",
+  "item.morecopperblock.waxed_exposed_copper_nugget": "涂蜡的斑驳铜粒",
+  "item.morecopperblock.waxed_weathered_copper_nugget": "涂蜡的锈蚀铜粒",
+  "item.morecopperblock.waxed_oxidized_copper_nugget": "涂蜡的氧化铜粒",
+
   "block.morecopperblock.alloy_copper_block": "合金铜块",
   "block.morecopperblock.exposed_alloy_copper_block": "斑驳的合金铜块",
   "block.morecopperblock.weathered_alloy_copper_block": "锈蚀的合金铜块",
@@ -57,6 +65,8 @@
   "alloy.morecopperblock.cut_stairs_suffix": "切制铜楼梯",
   "alloy.morecopperblock.cut_slab_suffix": "切制铜台阶",
   "alloy.morecopperblock.chiseled_suffix": "雕纹铜块",
+  "alloy.morecopperblock.ingot_suffix": "铜锭",
+  "alloy.morecopperblock.nugget_suffix": "铜粒",
 
   "morecopperblock.configuration.title": "MoreCopperBlock 配置",
   "morecopperblock.configuration.section.morecopperblock.common.toml": "MoreCopperBlock 配置",

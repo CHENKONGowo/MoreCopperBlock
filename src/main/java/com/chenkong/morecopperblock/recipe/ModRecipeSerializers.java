@@ -89,4 +89,37 @@ public class ModRecipeSerializers {
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<ChiseledAlloyCopperRecipe>>
             CHISELED_ALLOY_COPPER_RECIPE = RECIPE_SERIALIZERS.register("crafting_chiseled_alloy_copper_block",
                     () -> new RecipeSerializer<>(CHISELED_CODEC, CHISELED_STREAM_CODEC));
+
+    // ---- Copper Nugget Decompose (1 ingot → 9 nuggets) ----
+
+    private static final MapCodec<CopperNuggetDecomposeRecipe> NUGGET_DECOMPOSE_CODEC =
+            MapCodec.unit(new CopperNuggetDecomposeRecipe());
+    private static final StreamCodec<RegistryFriendlyByteBuf, CopperNuggetDecomposeRecipe> NUGGET_DECOMPOSE_STREAM_CODEC =
+            StreamCodec.unit(new CopperNuggetDecomposeRecipe());
+
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<CopperNuggetDecomposeRecipe>>
+            COPPER_NUGGET_DECOMPOSE_RECIPE = RECIPE_SERIALIZERS.register("crafting_copper_nugget_decompose",
+                    () -> new RecipeSerializer<>(NUGGET_DECOMPOSE_CODEC, NUGGET_DECOMPOSE_STREAM_CODEC));
+
+    // ---- Copper Block Decompose (1 alloy block → 9 ingots) ----
+
+    private static final MapCodec<CopperBlockDecomposeRecipe> BLOCK_DECOMPOSE_CODEC =
+            MapCodec.unit(new CopperBlockDecomposeRecipe());
+    private static final StreamCodec<RegistryFriendlyByteBuf, CopperBlockDecomposeRecipe> BLOCK_DECOMPOSE_STREAM_CODEC =
+            StreamCodec.unit(new CopperBlockDecomposeRecipe());
+
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<CopperBlockDecomposeRecipe>>
+            COPPER_BLOCK_DECOMPOSE_RECIPE = RECIPE_SERIALIZERS.register("crafting_copper_block_decompose",
+                    () -> new RecipeSerializer<>(BLOCK_DECOMPOSE_CODEC, BLOCK_DECOMPOSE_STREAM_CODEC));
+
+    // ---- Copper Nugget Compose (9 nuggets → 1 ingot) ----
+
+    private static final MapCodec<CopperNuggetComposeRecipe> NUGGET_COMPOSE_CODEC =
+            MapCodec.unit(new CopperNuggetComposeRecipe());
+    private static final StreamCodec<RegistryFriendlyByteBuf, CopperNuggetComposeRecipe> NUGGET_COMPOSE_STREAM_CODEC =
+            StreamCodec.unit(new CopperNuggetComposeRecipe());
+
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<CopperNuggetComposeRecipe>>
+            COPPER_NUGGET_COMPOSE_RECIPE = RECIPE_SERIALIZERS.register("crafting_copper_nugget_compose",
+                    () -> new RecipeSerializer<>(NUGGET_COMPOSE_CODEC, NUGGET_COMPOSE_STREAM_CODEC));
 }

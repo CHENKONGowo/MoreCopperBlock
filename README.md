@@ -1,26 +1,96 @@
-适配Minecraft26.2 neoforge
+# MoreCopperBlock-Plus
 
-Installation information
-=======
+**适配 Minecraft 26.2 · NeoForge 模组**
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+## 简介
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
+MoreCopperBlock-Plus 扩展了 Minecraft 的铜合金系统，引入全新的**合金铜块**系列方块，支持四种氧化状态（未氧化 / 斑驳 / 锈蚀 / 氧化）及对应的涂蜡变体。
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
+模组的核心特色是**有机化学系统命名法**：通过 3×3 工作台合成的合金铜块会根据每格铜锭的氧化状态自动获得唯一名称，名称在分解与再合成之间双向流通，可无限嵌套叠加。
 
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
+## 内容一览
 
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+### 合金铜方块（每种 4 种氧化状态）
+
+| 方块 | 合成方式 | 成分 |
+|------|---------|------|
+| 合金铜块 | 3×3 铜锭 | 9 个铜锭 |
+| 切制合金铜块 | 2×2 合金铜块 | 4 个铜块 |
+| 切制合金铜楼梯 | 3×3 切制铜块（楼梯形） | 6 个切制铜块 |
+| 切制合金铜台阶 | 1×3 切制铜块（横排） | 3 个切制铜块 |
+| 雕纹合金铜块 | 1×2 合金铜台阶（竖排） | 2 个台阶 |
+
+### 铜锭（7 种变体）
+
+原版铜锭 + 7 种自定义铜锭：
+
+- 斑驳的铜锭 / 锈蚀的铜锭 / 氧化的铜锭
+- 涂蜡的铜锭 / 涂蜡的斑驳铜锭 / 涂蜡的锈蚀铜锭 / 涂蜡的氧化铜锭
+
+### 铜粒（7 种变体）
+
+与铜锭对应的 7 种铜粒，遵循 9:1 的合成/分解比例。
+
+## 命名系统
+
+### 基础命名
+
+每格铜锭对应工作台 3×3 网格的一个位置（1–9），名称按位置排列：
+
+```
+1-涂蜡的锈蚀-2-氧化-3-涂蜡的斑驳铜块
+```
+
+表示第 1 格涂蜡的锈蚀铜锭、第 2 格氧化铜锭、第 3 格涂蜡的斑驳铜锭。
+
+### 嵌套命名
+
+铜锭 → 铜块 → 切制铜块 → 楼梯/台阶 → 雕纹块，命名逐层递进：
+
+```
+1-涂蜡的锈蚀-4-涂蜡的斑驳-7,8,9-三氧化铜锭
+1,2,3-三(1-涂蜡的锈蚀-4-涂蜡的斑驳-7,8,9-三氧化)-5,6,9-三涂蜡-2-斑驳-3-氧化切制铜块
+```
+
+嵌套层级用不同括号表示：`()` → `[]` → `{}`。
+
+### 命名继承
+
+- **分解**：铜块 → 9 个铜锭 / 铜锭 → 9 个铜粒，名称完整保留
+- **再合成**：不同来源的铜粒可混合合成，嵌套名称可无限叠加
+- **切制系列**：命名从铜块传递至切制铜块、楼梯、台阶、雕纹块
+
+## 铜粒合成/分解
+
+| 输入 | 输出 | 说明 |
+|------|------|------|
+| 9 个铜粒（3×3） | 1 个铜锭 | 支持混合变种，名称按系统命名法生成 |
+| 1 个铜锭 | 9 个铜粒 | 带名称的铜锭分解后，铜粒保留名称 |
+| 1 个合金铜块 | 9 个铜锭 | 带名称的铜块分解后，铜锭保留名称 |
+
+## 切石机
+
+切制合金铜块可通过切石机直接切割为楼梯或台阶。
+
+## 安装
+
+1. 安装 [NeoForge](https://neoforged.net/)（适用于 Minecraft 26.2）
+2. 将本模组 JAR 文件放入 `.minecraft/mods/` 目录
+
+## 开发
+
+```bash
+# 构建模组
+./gradlew build
+
+# 刷新依赖
+./gradlew --refresh-dependencies
+
+# 清理构建
+./gradlew clean
+```
+
+## 相关链接
+
+- NeoForge 文档：https://docs.neoforged.net/
+- NeoForge Discord：https://discord.neoforged.net/

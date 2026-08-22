@@ -55,13 +55,19 @@ public class AlloyCopperRecipe extends CustomRecipe {
     @Override
     public ItemStack assemble(CraftingInput input) {
         int[] types = new int[9];
+        String[] units = new String[9];
         int firstType = -1;
         boolean allSame = true;
+        boolean hasNested = false;
 
         for (int i = 0; i < 9; i++) {
             int row = i / 3;
             int col = i % 3;
-            types[i] = getIngotTypeId(input.getItem(col, row));
+            ItemStack ingot = input.getItem(col, row);
+            types[i] = getIngotTypeId(ingot);
+            units[i] = getIngotUnitString(ingot);
+            if (units[i].startsWith("[")) hasNested = true;
+
             if (i == 0) {
                 firstType = types[i];
             } else if (types[i] != firstType) {
@@ -69,12 +75,13 @@ public class AlloyCopperRecipe extends CustomRecipe {
             }
         }
 
-        // All 9 ingots are the same type → craft the corresponding vanilla copper block
-        if (allSame) {
+        // All 9 ingots are the same simple type and none is nested
+        // → craft the corresponding vanilla copper block
+        if (allSame && !hasNested) {
             return new ItemStack(getVanillaCopperBlock(firstType));
         }
 
-        // Mixed types → calculate average oxidation (mod 4 to unwax)
+        // Mixed types or nested ingots → calculate average oxidation (mod 4 to unwax)
         // and output the matching alloy copper block variant.
         double sum = 0;
         for (int t : types) {
@@ -97,6 +104,13 @@ public class AlloyCopperRecipe extends CustomRecipe {
         List<Integer> composition = new ArrayList<>(9);
         for (int t : types) composition.add(t);
         result.set(AlloyCopperBlockItem.COMPOSITION.get(), composition);
+
+        // Preserve nested ingot units for naming inheritance
+        if (hasNested) {
+            List<String> unitList = new ArrayList<>(9);
+            for (String u : units) unitList.add(u);
+            result.set(AlloyCopperBlockItem.INGOT_COMPOSITION.get(), unitList);
+        }
         return result;
     }
 
@@ -114,6 +128,20 @@ public class AlloyCopperRecipe extends CustomRecipe {
                 || stack.is(ModItems.WAXED_EXPOSED_COPPER_INGOT.get())
                 || stack.is(ModItems.WAXED_WEATHERED_COPPER_INGOT.get())
                 || stack.is(ModItems.WAXED_OXIDIZED_COPPER_INGOT.get());
+    }
+
+    /**
+     * Gets the composition unit string for an ingot slot.
+     * Simple types return "0"-"7"; named ingots (carrying a nested
+     * composition) return their composition's bracket notation so the
+     * resulting block name can inherit it.
+     */
+    private String getIngotUnitString(ItemStack ingot) {
+        List<String> nested = ingot.get(AlloyCopperBlockItem.INGOT_COMPOSITION.get());
+        if (nested != null && !AlloyCopperBlockItem.isDefaultIngotComposition(nested)) {
+            return nested.toString();
+        }
+        return String.valueOf(getIngotTypeId(ingot));
     }
 
     private int getIngotTypeId(ItemStack stack) {

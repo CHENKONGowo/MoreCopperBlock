@@ -58,6 +58,8 @@ public class ChiseledAlloyCopperRecipe extends CustomRecipe {
     @Override
     public ItemStack assemble(CraftingInput input) {
         List<Integer> chiseledComposition = new ArrayList<>(216);
+        List<String> nestedUnits = new ArrayList<>(216);
+        boolean hasNested = false;
         double sum = 0;
 
         for (int row = 0; row < 2; row++) {
@@ -79,6 +81,11 @@ public class ChiseledAlloyCopperRecipe extends CustomRecipe {
                     sum += type % 4;
                 }
             }
+
+            // 嵌套单元（命名继承）
+            List<String> units = getSlabNestedUnits(stack);
+            nestedUnits.addAll(units);
+            if (hasAnyNested(units)) hasNested = true;
         }
 
         double avg = sum / 216.0;
@@ -86,7 +93,40 @@ public class ChiseledAlloyCopperRecipe extends CustomRecipe {
 
         ItemStack result = new ItemStack(outBlock, 1);
         result.set(AlloyCopperBlockItem.CHISELED_COMPOSITION.get(), chiseledComposition);
+        if (hasNested) {
+            result.set(AlloyCopperBlockItem.INGOT_COMPOSITION.get(), nestedUnits);
+        }
         return result;
+    }
+
+    /**
+     * Gets the 108 nested unit strings of an input cut copper slab.
+     * Prefers stored nested units, then the simple composition, then block type.
+     */
+    private static List<String> getSlabNestedUnits(ItemStack stack) {
+        List<String> nested = stack.get(AlloyCopperBlockItem.INGOT_COMPOSITION.get());
+        if (nested != null && nested.size() == 108) return nested;
+
+        List<Integer> slabComp = stack.get(AlloyCopperBlockItem.SLAB_COMPOSITION.get());
+        if (slabComp != null && slabComp.size() == 108) {
+            List<String> result = new ArrayList<>(108);
+            for (int v : slabComp) result.add(String.valueOf(v));
+            return result;
+        }
+
+        // Vanilla cut copper slab
+        int type = getVanillaCutSlabType(((BlockItem) stack.getItem()).getBlock());
+        List<String> result = new ArrayList<>(108);
+        for (int i = 0; i < 108; i++) result.add(String.valueOf(type));
+        return result;
+    }
+
+    /** True if any unit is a nested bracket notation (named ingot). */
+    private static boolean hasAnyNested(List<String> units) {
+        for (String s : units) {
+            if (s.startsWith("[")) return true;
+        }
+        return false;
     }
 
     @Override
