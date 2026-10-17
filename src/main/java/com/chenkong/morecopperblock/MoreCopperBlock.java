@@ -34,6 +34,8 @@ import com.chenkong.morecopperblock.item.ModItems;
 import com.chenkong.morecopperblock.block.AlloyCopperBlockItem;
 import com.chenkong.morecopperblock.recipe.ModRecipeSerializers;
 
+// ---- Main Mod Class ----
+
 @Mod(MoreCopperBlock.MODID)
 public class MoreCopperBlock {
     public static final String MODID = "morecopperblock";
